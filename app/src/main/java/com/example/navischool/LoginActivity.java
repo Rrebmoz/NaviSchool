@@ -86,10 +86,10 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists() && documentSnapshot.getBoolean("isAdmin") != null) {
-                        boolean isAdmin = Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"));
+                    if (documentSnapshot.exists() && documentSnapshot.getBoolean("isBusDriver") != null) {
+                        boolean isBusDriver = Boolean.TRUE.equals(documentSnapshot.getBoolean("isBusDriver"));
                         Intent intent;
-                        if (isAdmin) {
+                        if (isBusDriver) {
                             intent = new Intent(getApplicationContext(), AdminActivity.class);
                         } else {
                             intent = new Intent(getApplicationContext(), MainActivity.class);
