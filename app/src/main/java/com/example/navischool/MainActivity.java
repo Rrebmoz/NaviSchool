@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         } else {
             textView.setText("Welcome");
-            checkIfAdmin(); // Check if user is an admin
+            checkIfBusDriver(); // Check if user is a bus driver
         }
 
         // Add Child Button Logic
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void checkIfAdmin() {
+    private void checkIfBusDriver() {
         db.collection("users").document(user.getUid())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
