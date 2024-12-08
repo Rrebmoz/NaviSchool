@@ -10,7 +10,7 @@
         android:id="@+id/user_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/admin_panel"
+        android:text="@string/bus_driver_panel"
         android:layout_marginTop="20dp" />
 
     <Button

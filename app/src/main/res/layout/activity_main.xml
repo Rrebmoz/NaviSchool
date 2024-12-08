@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,49 +11,54 @@
         android:id="@+id/address_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter address"
-        android:layout_marginTop="16dp" />
+        android:hint="@string/txtAddress"
+        android:layout_marginTop="16dp"
+        android:inputType="textEmailAddress"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/save_address_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Address"
+        android:text="@string/btnAddress"
         android:layout_marginTop="8dp" />
 
     <EditText
         android:id="@+id/phone_number_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter phone number"
+        android:hint="@string/txtPhoneNumber"
         android:layout_marginTop="16dp"
-        android:inputType="phone" />
+        android:inputType="phone"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/save_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Phone"
+        android:text="@string/btnSavePhoneNumber"
         android:layout_marginTop="8dp" />
 
     <EditText
         android:id="@+id/child_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter child's name" />
+        android:hint="@string/txtChildName"
+        android:inputType="textPersonName"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/add_child_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Child"
+        android:text="@string/btnAddChild"
         android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/remove_child_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Remove Child"
+        android:text="@string/btnRemoveChild"
         android:layout_marginTop="8dp" />
 
     <ListView
@@ -65,7 +71,7 @@
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

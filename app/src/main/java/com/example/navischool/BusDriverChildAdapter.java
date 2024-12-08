@@ -7,21 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.Map;
 
 public class BusDriverChildAdapter extends ArrayAdapter<String> {
 
     private final Context context;
     private final List<String> groupedChildren;
 
-    public BusDriverChildAdapter(Context context, List<String> groupedChildren) {
+    private final Map<String, String> childToPhoneMap;
+
+    public BusDriverChildAdapter(Context context, List<String> groupedChildren, Map<String, String> childToPhoneMap) {
         super(context, 0, groupedChildren);
         this.context = context;
         this.groupedChildren = groupedChildren;
+        this.childToPhoneMap = childToPhoneMap;
     }
 
     @NonNull
@@ -32,7 +35,6 @@ public class BusDriverChildAdapter extends ArrayAdapter<String> {
         }
 
         TextView textView = convertView.findViewById(android.R.id.text1);
-
         String item = groupedChildren.get(position);
 
         if (item.startsWith("Address:")) {
@@ -46,7 +48,9 @@ public class BusDriverChildAdapter extends ArrayAdapter<String> {
 
         if (!item.startsWith("Address:")) {
             convertView.setOnClickListener(v -> {
-                Toast.makeText(context, item + " is almost home.", Toast.LENGTH_SHORT).show();
+                String phoneNumber = childToPhoneMap.get(item);
+                //TODO
+
                 ((BusDriverActivity) context).removeChildFromSession(item);
             });
         }

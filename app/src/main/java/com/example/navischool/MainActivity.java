@@ -1,13 +1,11 @@
 package com.example.navischool;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,16 +28,12 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore db;
     FirebaseUser user;
-
-    TextView textView;
     EditText childNameInput, addressInput, phoneNumberInput;
     Button addChildButton, removeChildButton, saveAddressButton, savePhoneButton, logoutButton;
-
     ListView childrenListView;
     ChildListAdapter childListAdapter;
     List<String> childrenList;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // Optional: You can add validation to check the phone number format
             if (!phoneNumber.matches("\\d{10}")) {  // Example: simple validation for 10 digit number
                 Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show();
                 return;

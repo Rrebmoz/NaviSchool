@@ -21,7 +21,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BusDriverActivity extends AppCompatActivity {
 
@@ -41,7 +43,7 @@ public class BusDriverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_bus_driver);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -75,41 +77,45 @@ public class BusDriverActivity extends AppCompatActivity {
         });
     }
 
-    // This method will load the grouped children when the START button is pressed
     private void loadChildren() {
         db.collection("users")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     groupedChildren = new ArrayList<>();
-                    String currentParentEmail = null;
+                    String currentParentAddress = null;
+                    Map<String, String> childToPhoneMap = new HashMap<>();
+
                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         List<String> children = (List<String>) documentSnapshot.get("children");
+                        String parentPhone = documentSnapshot.getString("phone_number");
+                        String parentAddress = documentSnapshot.getString("address");
+
                         if (children != null && !children.isEmpty()) {
-                            String parentAddress = documentSnapshot.getString("address");
-                            if (currentParentEmail == null || !currentParentEmail.equals(parentAddress)) {
+                            if (currentParentAddress == null || !currentParentAddress.equals(parentAddress)) {
                                 groupedChildren.add("Address: " + parentAddress);
-                                currentParentEmail = parentAddress;
+                                currentParentAddress = parentAddress;
                             }
-                            // Add the children under the parent email
-                            groupedChildren.addAll(children);
+
+                            for (String child : children) {
+                                groupedChildren.add(child);
+                                childToPhoneMap.put(child, parentPhone); // Link child to parent's phone
+                            }
                         }
                     }
 
-                    // Set the adapter to display the children
-                    childAdapter = new BusDriverChildAdapter(this, groupedChildren);
+                    // Set the adapter with the child-to-phone map
+                    childAdapter = new BusDriverChildAdapter(this, groupedChildren, childToPhoneMap);
                     childrenListView.setAdapter(childAdapter);
 
-                    // Show the children list and hide the start button
                     childrenListView.setVisibility(View.VISIBLE);
                     startButton.setVisibility(View.GONE);
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to load children.", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to load children.", Toast.LENGTH_SHORT).show());
     }
 
-    public void removeChildFromSession(String email) {
-        groupedChildren.remove(email);
+
+    public void removeChildFromSession(String child) {
+        groupedChildren.remove(child);
         childAdapter.notifyDataSetChanged();
     }
 }

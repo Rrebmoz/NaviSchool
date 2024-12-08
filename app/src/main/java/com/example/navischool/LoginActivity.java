@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
-                                checkIfAdmin(user.getUid());
+                                checkIfBusDriver(user.getUid());
                             }
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void checkIfAdmin(String uid) {
+    private void checkIfBusDriver(String uid) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {

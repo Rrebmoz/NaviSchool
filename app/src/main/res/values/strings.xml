@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NaviSchool</string>
+    <string name="app_name" translatable="false">NaviSchool</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">password</string>
@@ -9,6 +9,13 @@
     <string name="logout">logout</string>
     <string name="password_requirements">^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{7,}$</string>
     <string name="FETCH_FAIL">Failed to fetch user data</string>
-    <string name="admin_panel">ADMIN PANEL</string>
-    <string name="start">START</string>
+    <string name="bus_driver_panel">ADMIN PANEL</string>
+    <string name="start">Start</string>
+    <string name="txtAddress">Enter address</string>
+    <string name="btnAddress">Save Address</string>
+    <string name="txtPhoneNumber">Enter phone number</string>
+    <string name="btnSavePhoneNumber">Save Phone</string>
+    <string name="txtChildName">Enter child\'s name</string>
+    <string name="btnAddChild">Add Child</string>
+    <string name="btnRemoveChild">Remove Child</string>
 </resources>
