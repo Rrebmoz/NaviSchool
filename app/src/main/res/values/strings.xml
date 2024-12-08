@@ -10,4 +10,5 @@
     <string name="password_requirements">^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{7,}$</string>
     <string name="FETCH_FAIL">Failed to fetch user data</string>
     <string name="admin_panel">ADMIN PANEL</string>
+    <string name="start">START</string>
 </resources>

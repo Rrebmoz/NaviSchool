@@ -6,13 +6,34 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/user_details"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/address_input"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
+        android:hint="Enter address"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/save_address_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Address"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/phone_number_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter phone number"
+        android:layout_marginTop="16dp"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/save_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Phone"
+        android:layout_marginTop="8dp" />
 
     <EditText
         android:id="@+id/child_name_input"
@@ -34,19 +55,11 @@
         android:text="Remove Child"
         android:layout_marginTop="8dp" />
 
-    <EditText
-        android:id="@+id/address_input"
+    <ListView
+        android:id="@+id/children_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter address"
         android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/save_address_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Address"
-        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/logout"

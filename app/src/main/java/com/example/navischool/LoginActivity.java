@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                         boolean isBusDriver = Boolean.TRUE.equals(documentSnapshot.getBoolean("isBusDriver"));
                         Intent intent;
                         if (isBusDriver) {
-                            intent = new Intent(getApplicationContext(), AdminActivity.class);
+                            intent = new Intent(getApplicationContext(), BusDriverActivity.class);
                         } else {
                             intent = new Intent(getApplicationContext(), MainActivity.class);
                         }
