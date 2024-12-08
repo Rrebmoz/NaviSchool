@@ -13,12 +13,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    FirebaseFirestore db;
     Button button;
     TextView textView;
     FirebaseUser user;
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
         button = findViewById(R.id.logout);
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
@@ -45,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            textView.setText(user.getEmail());
-            checkIfAdmin(user.getUid());
+            textView.setText("ADMIN PANEL\n" + user.getEmail());
         }
 
         button.setOnClickListener(view -> {
@@ -55,20 +51,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-    }
-
-    private void checkIfAdmin(String uid) {
-        db.collection("users").document(uid).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists() && documentSnapshot.getBoolean("isAdmin") != null) {
-                        boolean isAdmin = Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"));
-                        if (isAdmin) {
-                            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                })
-                .addOnFailureListener(e -> textView.setText(R.string.FETCH_FAIL));
     }
 }

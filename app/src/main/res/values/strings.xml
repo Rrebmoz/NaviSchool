@@ -8,4 +8,6 @@
     <string name="click_here_to_register">click here to register</string>
     <string name="logout">logout</string>
     <string name="password_requirements">^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{7,}$</string>
+    <string name="FETCH_FAIL">Failed to fetch user data</string>
+    <string name="admin_panel">ADMIN PANEL</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -69,16 +70,34 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                checkIfAdmin(user.getUid());
+                            }
                         } else {
-                            // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
         });
+    }
+
+    private void checkIfAdmin(String uid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists() && documentSnapshot.getBoolean("isAdmin") != null) {
+                        boolean isAdmin = Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"));
+                        Intent intent;
+                        if (isAdmin) {
+                            intent = new Intent(getApplicationContext(), AdminActivity.class);
+                        } else {
+                            intent = new Intent(getApplicationContext(), MainActivity.class);
+                        }
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show());
     }
 }
