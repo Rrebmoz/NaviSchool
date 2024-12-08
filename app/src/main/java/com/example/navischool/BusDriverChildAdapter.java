@@ -1,5 +1,6 @@
 package com.example.navischool;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +30,7 @@ public class BusDriverChildAdapter extends ArrayAdapter<String> {
         this.childToPhoneMap = childToPhoneMap;
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -45,17 +47,19 @@ public class BusDriverChildAdapter extends ArrayAdapter<String> {
             textView.setPadding(0, 20, 0, 10);
         } else {
             textView.setText(item);
+            textView.setTextColor(Color.WHITE);
             textView.setPadding(0, 5, 0, 5);
         }
 
         if (!item.startsWith("Address:")) {
             String phoneNumber = childToPhoneMap.get(item);
             convertView.setOnClickListener(v -> {
-                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                smsIntent.setData(Uri.parse("sms:"));
-                smsIntent.putExtra("address", phoneNumber);
-                smsIntent.putExtra("sms_body", "Uw kind, " + phoneNumber + " is almost home.");
-                context.startActivity(smsIntent);
+                Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+                smsIntent.setData(Uri.parse("sms:" + phoneNumber));
+                smsIntent.putExtra("sms_body", "Your child, " + item + " is almost home.");
+                if (smsIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(smsIntent);
+                }
                 ((BusDriverActivity) context).removeChildFromSession(item);
             });
         }
