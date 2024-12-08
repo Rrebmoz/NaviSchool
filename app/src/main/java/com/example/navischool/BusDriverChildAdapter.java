@@ -1,7 +1,9 @@
 package com.example.navischool;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +49,13 @@ public class BusDriverChildAdapter extends ArrayAdapter<String> {
         }
 
         if (!item.startsWith("Address:")) {
+            String phoneNumber = childToPhoneMap.get(item);
             convertView.setOnClickListener(v -> {
-                String phoneNumber = childToPhoneMap.get(item);
-                //TODO
-
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.setData(Uri.parse("sms:"));
+                smsIntent.putExtra("address", phoneNumber);
+                smsIntent.putExtra("sms_body", "Uw kind, " + phoneNumber + " is almost home.");
+                context.startActivity(smsIntent);
                 ((BusDriverActivity) context).removeChildFromSession(item);
             });
         }
